@@ -1,0 +1,9 @@
+<!--templates/registration/logout.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+    <body>
+        <h2>You have been logged out.</h2>
+        <a href="{% url 'login' %}">Login</a>
+    </body>
+{% endblock %}

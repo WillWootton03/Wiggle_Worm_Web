@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .clickable-row,
+    .clickable-row td{
+        cursor: pointer !important;
+        transition: background-color 0.2s;
+    }
+    .clickable-row:hover{
+        background-color: #555555;
+    }
+</style>
+
+<script>
+    const csrfToken = '{{ csrf_token }}'
+</script>
+
+
+    <!--Page Header-->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-4">
+                <h1>Admin Welcome</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-lg-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <h3 class="card-title">Stores</h3>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Store</th>
+                                        <th scope="col">Owner</th>
+                                        <th scope="col">Location</th>
+                                    </tr>
+                                </thead>
+                                    <!--Create rows for all current stores-->
+                            </table>
+                        </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Item Stock</h5>
+                        <table class="table table-hover table-striped" style="table-layout: fixed; width: 100%">
+                            <thead>
+                            <tr>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Item Weight</th>
+                                <th scope="col">Item Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in items %}
+                            <tr class="clickable-row" onclick="new bootstrap.Modal(document.getElementById('modal{{ item.item_id }}')).show()">
+                                <td class="align-middle">{{ item.item_name }}</td>
+                                <td class="align-middle">{{ item.item_weight }}</td>
+                                <td class="align-middle">{{ item.item_price}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- Modal for each Item-->
+                    {% for item in items %}
+                        <div class="modal fade" id="modal{{ item.item_id }}"
+                             data-bs-backdrop="static"
+                             data-bs-keyboard="false"
+                             aria-labelledby="modalLabel{{ item.item_id }}"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">{{ item.item_name|title }} Details</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="form-{{ item.item_id }}">
+                                            <div class="mb-3">
+                                                <label for="weight-{{ item.item_id }}" class="form-label">Weight</label>
+                                                <input type="text" class="form-control" id="weight-{{ item.item_id }}"
+                                                       value="{{ item.item_weight }}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="price-{{ item.item_id }}" class="form-label">Price</label>
+                                                <input type="text" class="form-control" id="price-{{ item.item_id }}"
+                                                value="{{ item.item_price }}">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger delete-btn" data-item-id="{{ item.item_id }}">Delete</button>
+                                        <button type="button" class="btn btn-primary update-btn" data-item-id="{{ item.item_id }}">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    document.body.addEventListener('click', e => {
+        console.log('Body clicked', e.target);
+        const updateBtn = e.target.closest('.update-btn');
+        if(updateBtn) console.log('update button clicked', updateBtn);
+        const deleteBtn = e.target.closest('.delete-btn');
+        if(deleteBtn) console.log('delete button clicked', deleteBtn);
+
+        if(updateBtn) {
+            const itemId =updateBtn.dataset.itemId
+            const data = {
+                weight: document.getElementById(`weight-${itemId}`).value,
+                price: document.getElementById(`price-${itemId}`).value,
+            };
+
+            fetch(`/update-item/${itemId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(resp => {
+                    if (resp.success) {
+                        alert('Item updated!');
+                        location.reload()
+                    } else {
+                        alert('Update failed.')
+                    }
+                });
+        }
+        if(deleteBtn){
+            const itemId = deleteBtn.dataset.itemId;
+
+            if (!confirm(`Are you sure you want to delete ${itemId}`)) return;
+            fetch(`/delete-item/${itemId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken
+                }
+            })
+                .then(res => res.json())
+                .then(resp => {
+                    if (resp.success) {
+                        alert('Item deleted');
+                        location.reload()
+                    } else {
+                        alert('Delete Failed')
+                    }
+                });
+        }
+    });
+</script>
+{% endblock %}

@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'wiggle_worm',
     'bootstrap5',
     'xlsxwriter',
     'pandas',
-    'openpyxl'
+    'openpyxl',
+    'wiggle_worm.apps.WiggleWormConfig'
 ]
 
 MIDDLEWARE = [
@@ -86,10 +86,18 @@ WSGI_APPLICATION = 'wiggle_worm_web.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+from dotenv import load_dotenv
+load_dotenv()
+
+import os
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

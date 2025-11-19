@@ -29,19 +29,60 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <h3 class="card-title">Stores</h3>
-                        <div class="card-body">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Store</th>
-                                        <th scope="col">Owner</th>
-                                        <th scope="col">Location</th>
+                    <div class="card-body">
+                        <h3 class="card-title">Stores</h3>
+                        <table class="table table-striped table-hover" style="table-layout: fixed; width: 100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Store</th>
+                                    <th scope="col">Owner</th>
+                                    <th scope="col">Location</th>
+                                </tr>
+                            </thead>
+                                <!--Create rows for all current stores-->
+                                {% for store in stores%}
+                                    <tr class="clickable-row" onclick="new bootstrap.Modal(document.getElementById('modal{{ store.id }}')).show()">
+                                        <td class="align-middle">{{ store.name }}</td>
+                                        <td class="align-middle">{{ store.owner }}</td>
+                                        <td class="align-middle">{{ store.location }}</td>
                                     </tr>
-                                </thead>
-                                    <!--Create rows for all current stores-->
-                            </table>
+                                {% endfor %}
+                        </table>
+                    {% for store in stores %}
+                        <div class="modal fade" id="modal{{ store.id }}"
+                             data-bs-backdrop="static"
+                             data-bs-keyboard="false"
+                             aria-labelledby="modalLabel{{ store.id }}"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">{{ store.name }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="form-{{ store.id }}">
+                                            <div class="mb-3">
+                                                <label for="owner-{{ store.id }}" class="form-label">Owner</label>
+                                                <input type="text" class="form-control" id="owner-{{ store.id }}"
+                                                       value="{{ store.owner }}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="location-{{ store.id }}" class="form-label">Location</label>
+                                                <input type="text" class="form-control" id="owner-{{ store.id }}"
+                                                       value="{{ store.location }}">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger delete-btn" data-store-id="{{ store.id }}">Delete</button>
+                                        <button type="button" class="btn btn-primary update-btn" data-store-id="{{ store.id }}">Update</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    {% endfor %}
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -58,44 +99,44 @@
                             </thead>
                             <tbody>
                             {% for item in items %}
-                            <tr class="clickable-row" onclick="new bootstrap.Modal(document.getElementById('modal{{ item.item_id }}')).show()">
-                                <td class="align-middle">{{ item.item_name }}</td>
-                                <td class="align-middle">{{ item.item_weight }}</td>
-                                <td class="align-middle">{{ item.item_price}}</td>
+                            <tr class="clickable-row" onclick="new bootstrap.Modal(document.getElementById('modal{{ item.id }}')).show()">
+                                <td class="align-middle">{{ item.name }}</td>
+                                <td class="align-middle">{{ item.weight }}</td>
+                                <td class="align-middle">{{ item.price}}</td>
                             </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                         <!-- Modal for each Item-->
                     {% for item in items %}
-                        <div class="modal fade" id="modal{{ item.item_id }}"
+                        <div class="modal fade" id="modal{{ item.id }}"
                              data-bs-backdrop="static"
                              data-bs-keyboard="false"
-                             aria-labelledby="modalLabel{{ item.item_id }}"
+                             aria-labelledby="modalLabel{{ item.id }}"
                              aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">{{ item.item_name|title }} Details</h5>
+                                        <h5 class="modal-title">{{ item.name }} Details</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form id="form-{{ item.item_id }}">
+                                        <form id="form-{{ item.id }}">
                                             <div class="mb-3">
-                                                <label for="weight-{{ item.item_id }}" class="form-label">Weight</label>
-                                                <input type="text" class="form-control" id="weight-{{ item.item_id }}"
-                                                       value="{{ item.item_weight }}">
+                                                <label for="weight-{{ item.id }}" class="form-label">Weight</label>
+                                                <input type="text" class="form-control" id="weight-{{ item.id }}"
+                                                       value="{{ item.weight }}">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="price-{{ item.item_id }}" class="form-label">Price</label>
-                                                <input type="text" class="form-control" id="price-{{ item.item_id }}"
-                                                value="{{ item.item_price }}">
+                                                <label for="price-{{ item.id }}" class="form-label">Price</label>
+                                                <input type="text" class="form-control" id="price-{{ item.id }}"
+                                                value="{{ item.price }}">
                                             </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger delete-btn" data-item-id="{{ item.item_id }}">Delete</button>
-                                        <button type="button" class="btn btn-primary update-btn" data-item-id="{{ item.item_id }}">Update</button>
+                                        <button type="button" class="btn btn-danger delete-btn" data-item-id="{{ item.id }}">Delete</button>
+                                        <button type="button" class="btn btn-primary update-btn" data-item-id="{{ item.id }}">Update</button>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +158,7 @@
         if(deleteBtn) console.log('delete button clicked', deleteBtn);
 
         if(updateBtn) {
-            const itemId =updateBtn.dataset.itemId
+            const itemId = updateBtn.dataset.itemId
             const data = {
                 weight: document.getElementById(`weight-${itemId}`).value,
                 price: document.getElementById(`price-${itemId}`).value,

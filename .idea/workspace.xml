@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a9b5e13-e8bc-47fd-a398-840d13bde4f8" name="Changes" comment="Initial git commit. Basic website with users, and roles set up, small urls that display minimal information but allow for updating models through the website.">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/Wiggle_Worm-Stores.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wiggle_worm/signals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/Wiggle_Worm-Items.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/Wiggle_Worm-Items.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/admin_homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/admin_homepage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wiggle_worm/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wiggle_worm/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wiggle_worm/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wiggle_worm/migrations/0002_alter_stock_item.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wiggle_worm/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wiggle_worm/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm/services.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wiggle_worm/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wiggle_worm_web/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm_web/settings.py" afterDir="false" />
-    </list>
+    <list default="true" id="2a9b5e13-e8bc-47fd-a398-840d13bde4f8" name="Changes" comment="Day Log: Refined the databases and items by converting Stock into a container for a StockItem model which holds item data inside a stock. Created functionality in the django admin site to make adding, deleting and modifying data easier and readable. Will commit more frequently as tasks complete instead of daily." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -145,7 +128,7 @@
       <workItem from="1763327072346" duration="2519000" />
       <workItem from="1763400179036" duration="38735000" />
       <workItem from="1763484010986" duration="20214000" />
-      <workItem from="1763523408188" duration="5999000" />
+      <workItem from="1763523408188" duration="6321000" />
     </task>
     <task id="LOCAL-00001" summary="Initial git commit. Basic website with users, and roles set up, small urls that display minimal information but allow for updating models through the website.">
       <option name="closed" value="true" />
@@ -163,7 +146,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763450169360</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Day Log: Refined the databases and items by converting Stock into a container for a StockItem model which holds item data inside a stock. Created functionality in the django admin site to make adding, deleting and modifying data easier and readable. Will commit more frequently as tasks complete instead of daily.">
+      <option name="closed" value="true" />
+      <created>1763532546640</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1763532546640</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,7 +173,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial git commit. Basic website with users, and roles set up, small urls that display minimal information but allow for updating models through the website." />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial git commit. Basic website with users, and roles set up, small urls that display minimal information but allow for updating models through the website." />
+    <MESSAGE value="Day Log: Refined the databases and items by converting Stock into a container for a StockItem model which holds item data inside a stock. Created functionality in the django admin site to make adding, deleting and modifying data easier and readable. Will commit more frequently as tasks complete instead of daily." />
+    <option name="LAST_COMMIT_MESSAGE" value="Day Log: Refined the databases and items by converting Stock into a container for a StockItem model which holds item data inside a stock. Created functionality in the django admin site to make adding, deleting and modifying data easier and readable. Will commit more frequently as tasks complete instead of daily." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

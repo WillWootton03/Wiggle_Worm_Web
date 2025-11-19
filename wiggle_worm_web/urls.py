@@ -28,6 +28,8 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('admin_homepage/', views.admin_homepage, name='admin_homepage'),
-    path('update-item/<str:item_id>/', views.update_item, name='update_item'),
-    path('delete-item/<str:item_id>/', views.delete_item, name='delete_item'),
+    path('supplier_homepage/', views.supplier_homepage, name='supplier_homepage'),
+    path('update-item/<str:item_id>/', views.update_item_data, name='update_item'),
+    path('delete-item/<str:item_id>/', views.delete_item_data, name='delete_item'),
+    path('update-stock-item/', views.update_stock_item, name='update_stock_item'),
 ]

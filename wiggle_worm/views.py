@@ -6,6 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import authenticate, login, logout
 from django.template import Context
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import User
 from .forms import LoginForm, Register
@@ -78,13 +79,26 @@ def admin_homepage(request):
     else:
         print(user.role)
         context = {'user': user}
-        return render(request, '/', context)
+        return redirect('home')
+
+@login_required()
+def supplier_homepage(request):
+    user = request.user
+    if user.role == 'Supplier':
+        items = Item.objects.all()
+        store = Store.objects.get(owner=user)
+        if store:
+            stock_items = Stock.objects.get(store=store).stock_items.all()
+            context = {'user': user, 'items': items, 'stock_items': stock_items}
+            return render(request, 'supplier_homepage.html', context)
+        else:
+            print('Not a Supplier of a store')
+    return redirect('home')
 
 
 
 
-
-def update_item(request, item_id):
+def update_item_data(request, item_id):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
@@ -100,7 +114,7 @@ def update_item(request, item_id):
     return JsonResponse({'success': False, 'error' : 'Invalid request.'})
 
 
-def delete_item(request, item_id):
+def delete_item_data(request, item_id):
     if request.method == 'POST':
         try:
             item = Item.objects.get(id=item_id)
@@ -109,3 +123,22 @@ def delete_item(request, item_id):
         except Item.DoesNotExist:
             return JsonResponse({'success': False})
     return JsonResponse({'status': 'error', 'error': 'Invalid request'}, status=400)
+
+@csrf_exempt
+def update_stock_item(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+
+        try:
+            stock_item_id = data.get('id')
+            stock_item_uuid = uuid.UUID(stock_item_id)
+            stock_item = StockItem.objects.get(id=stock_item_uuid)
+            stock_item.quantity = int(data.get('quantity'))
+            stock_item.price = float(data.get('price'))
+            stock_item.save()
+            return JsonResponse({'success': True})
+        except StockItem.DoesNotExist:
+            return JsonResponse({'success': False, 'error' : 'Item not found.'})
+
+    return JsonResponse({'success': False, 'error' : 'Invalid request.'})

@@ -104,8 +104,6 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 
-
-
 class Stock(models.Model):
     store = models.OneToOneField(Store, on_delete=models.CASCADE, related_name='stock')
 
@@ -115,7 +113,9 @@ class Stock(models.Model):
 class StockItem(models.Model):
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE, related_name='stock_items')
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     quantity = models.IntegerField(default=0)
+    price = models.FloatField(default=0)
 
     class Meta:
         unique_together = (('stock', 'item'),)

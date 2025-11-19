@@ -21,11 +21,25 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Wiggle Worm Baits</a>
         </div>
-        <div class="collapse navbar-collapse" id="navbardSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/home">Home</a>
-                </li>
+                {% if user.role == 'Supplier' %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/supplier_homepage">Supplier</a>
+                    </li>
+                {% endif %}
+                {% if user.role == 'Administrator' %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/admin_homepage">Admin</a>
+                    </li>
+                {% endif %}
+                {% if user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/admin">Django-Admin</a>
+                    </li>
+                {% endif %}
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
@@ -43,3 +57,15 @@
     {% endblock %}
   </body>
 </html>
+
+<!--Style to be used in all html-->
+<style>
+    .clickable-row,
+    .clickable-row td{
+        cursor: pointer !important;
+        transition: background-color 0.2s;
+    }
+    .clickable-row:hover{
+        background-color: #555555;
+    }
+</style>

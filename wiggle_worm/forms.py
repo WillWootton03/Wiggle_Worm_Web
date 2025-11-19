@@ -6,6 +6,7 @@ from django.core import validators
 from .models import User
 
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.forms import AuthenticationForm
 
 
 class LoginForm(forms.Form):
@@ -18,6 +19,7 @@ class LoginForm(forms.Form):
                 'aria-label': 'Email',
                 'aria-required': 'true',
                 'aria-describedby': 'email-addon',
+                'autocomplete': 'off',
             }
         )
     )
@@ -76,8 +78,5 @@ class Register(ModelForm):
         if commit:
             user.save()
         return user
-
-
-
 
 

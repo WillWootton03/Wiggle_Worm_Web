@@ -1,3 +1,5 @@
+from _ast import Store
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
@@ -67,15 +69,16 @@ from .services import generate_new_items_file, add_item
 def admin_homepage(request):
     user = request.user
     print(user.role)
-    items = Item.objects.all()
-    context = {'user': user, 'items': items}
-    print(user.role)
     if user.role == 'Administrator':
         print('administrator')
+        items = Item.objects.all()
+        stores = Store.objects.all()
+        context = {'user': user, 'items': items, 'stores': stores}
         return render(request, 'admin/admin_homepage.html', context)
     else:
         print(user.role)
-    return render(request, '/', context)
+        context = {'user': user}
+        return render(request, '/', context)
 
 
 
@@ -85,9 +88,9 @@ def update_item(request, item_id):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            item = Item.objects.get(item_id=item_id)
-            item.item_weight = float(data.get('weight', item.item_weight))
-            item.item_price = float(data.get('price', item.item_price))
+            item = Item.objects.get(id=item_id)
+            item.weight = float(data.get('weight', item.weight))
+            item.price = float(data.get('price', item.price))
             item.save()
             return JsonResponse({'success': True})
         except Item.DoesNotExist:
@@ -100,7 +103,7 @@ def update_item(request, item_id):
 def delete_item(request, item_id):
     if request.method == 'POST':
         try:
-            item = Item.objects.get(item_id=item_id)
+            item = Item.objects.get(id=item_id)
             item.delete()
             return JsonResponse({'success': True})
         except Item.DoesNotExist:

@@ -4,24 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a9b5e13-e8bc-47fd-a398-840d13bde4f8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/wiggle-worm-web.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/Wiggle_Worm-Items.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mystaticfiles/mystle.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/admin/admin_homepage.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/front_page.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/register_success.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/registration/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/registration/logout.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/registration/register.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wiggle_worm/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wiggle_worm/services.py" afterDir="false" />
+    <list default="true" id="2a9b5e13-e8bc-47fd-a398-840d13bde4f8" name="Changes" comment="Initial git commit. Basic website with users, and roles set up, small urls that display minimal information but allow for updating models through the website.">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/Wiggle_Worm-Stores.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wiggle_worm/signals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/Wiggle_Worm-Items.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/Wiggle_Worm-Items.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/admin_homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/admin_homepage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wiggle_worm/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wiggle_worm/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm/apps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wiggle_worm/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wiggle_worm/migrations/0002_alter_stock_item.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wiggle_worm/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wiggle_worm/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm/services.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wiggle_worm/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wiggle_worm_web/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm_web/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +41,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;WillWootton03&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/WillWootton03/Wiggle_Worm_Web&quot;,
+    &quot;accountId&quot;: &quot;004590c4-6381-49cd-a710-59b0d8dd760f&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -71,6 +82,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -79,6 +91,7 @@
       <recent name="C:\Users\Will\PycharmProjects\wiggle-worm-web\media" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Will\PycharmProjects\wiggle-worm-web" />
       <recent name="C:\Users\Will\PycharmProjects\wiggle-worm-web\templates\registration" />
     </key>
   </component>
@@ -130,12 +143,46 @@
       <workItem from="1763242652943" duration="8184000" />
       <workItem from="1763319073470" duration="7679000" />
       <workItem from="1763327072346" duration="2519000" />
-      <workItem from="1763400179036" duration="38475000" />
+      <workItem from="1763400179036" duration="38735000" />
+      <workItem from="1763484010986" duration="20214000" />
+      <workItem from="1763523408188" duration="5999000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial git commit. Basic website with users, and roles set up, small urls that display minimal information but allow for updating models through the website.">
+      <option name="closed" value="true" />
+      <created>1763450094010</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1763450094010</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Initial git commit. Basic website with users, and roles set up, small urls that display minimal information but allow for updating models through the website.">
+      <option name="closed" value="true" />
+      <created>1763450169360</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1763450169360</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial git commit. Basic website with users, and roles set up, small urls that display minimal information but allow for updating models through the website." />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial git commit. Basic website with users, and roles set up, small urls that display minimal information but allow for updating models through the website." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

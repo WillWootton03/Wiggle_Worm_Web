@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
     {% csrf_token %}
+
+    <style>
+    td:not(:has(input)){
+        cursor: default;
+    }
+    th:not(:has(input)){
+        cursor: default;
+    }
+    </style>
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-lg-3 col-md-4">
@@ -14,7 +24,7 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title">My Stock</h3>
+                        <h3 class="card-title">My Current Stock</h3>
                         <table class="table table-striped table-hover" style="table-layout: fixed; width: 100%">
                             <thead>
                                 <tr>
@@ -31,19 +41,21 @@
                                 <tr data-id="{{ stock_item.id }}">
                                     <td class="text-start">{{ stock_item.item.name }}</td>
                                     <td class="text-center">
-                                        <input type="number" class="quantity-input"
+                                        <input type="number" class="form-control-plaintext text-center quantity-input"
                                                value="{{ stock_item.quantity }}"
                                                 style="width: 4em; text-align: center">
                                     </td>
                                     <td class="text-center">
-                                        <input type="number" class="price-input" step="0.1"
-                                               value="{{ stock_item.price|floatformat:1 }}"
+                                        <input type="number" class="form-control-plaintext text-center price-input"
+                                               step="0.1" value="{{ stock_item.price|floatformat:1 }}"
                                                 style="width: 5em; text-align: center;">
                                     </td>
-                                    <td class="item-price" style="text-align: center">{{ stock_item.item.price|floatformat:2 }}</td>
-                                    <td class="profit-margin" style="text-align: center">0.00</td>
+                                    <td class="item-price text-center align-middle">{{ stock_item.item.price|floatformat:2 }}</td>
                                     <td class="text-center">
-                                        <input type="checkbox" name="selected_items" value="{{ stock_item.id }}" class="remove-checkbox">
+                                        <input type="number" class="form-control-plaintext text-center profit-margin" step="0.1" value="0.0" style="text-align: center; width: 4em;">
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="checkbox" name="selected_items" value="{{ stock_item.id }}" class="remove-checkbox align-bottom">
                                     </td>
                                     </tr>
                             {% endfor %}
@@ -70,101 +82,98 @@
     </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Quantity of Item
-        const quantityInputs = document.querySelectorAll('.quantity-input');
-        quantityInputs.forEach(input =>{
-            input.addEventListener('change', sendUpdate);
-        });
+        const rows = document.querySelectorAll('tbody tr');
+        const checkboxes = document.querySelectorAll('.remove-checkbox');
+        const removeBtn = document.getElementById('remove-selected');
 
-        //Price of Item
-        const priceInputs = document.querySelectorAll('.price-input');
-        priceInputs.forEach(input => {
-            input.addEventListener('change', sendUpdate);
-        });
-
-        async function sendUpdate(event){
-            const input = event.target;
-            const row = input.closest('tr');
-            const stockItemID = row.dataset.id;
-
-            //Read values from the row
-            const quantity = row.querySelector('.quantity-input').value;
-            const price = row.querySelector('.price-input').value;
-
-            try{
-                const response = await fetch('/update-stock-item/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken')
-                    },
-                    body: JSON.stringify({
-                        id: stockItemID,
-                        quantity: quantity,
-                        price: price
-                    })
-                });
-
-                const data = await response.json();
-                if (data.success) {
-                    console.log('Stock Item Updated')
-                } else {
-                    console.log('Could not update item')
-                }
-            } catch (err){
-                console.error('Error: ', err);
-            }
-        }
-    });
-
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie) {
-            const cookies = document.cookie.split(';');
-            for (let cookie of cookies) {
-                cookie = cookie.trim()
-                if (cookie.startsWith(name + "=")) {
-                    cookieValue = decodeURIComponent(cookie.slice(name.length +1));
-                    break;
+        //CSRF helper
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie) {
+                const cookies = document.cookie.split(';');
+                for (let cookie of cookies) {
+                    cookie = cookie.trim()
+                    if (cookie.startsWith(name + "=")) {
+                        cookieValue = decodeURIComponent(cookie.slice(name.length +1));
+                        break;
+                    }
                 }
             }
-        }
         return cookieValue
     }
 
-    function updateProfitMargin(row) {
+    //Updates the profit margin based on difference between stock_item.price and item.price
+    function updateProfitMargin(row){
         const purchasePrice = parseFloat(row.querySelector('.item-price').textContent) || 0;
-        const salesPrice = parseFloat(row.querySelector('.price-input').value) || 0;
-        row.querySelector('.profit-margin').textContent = (salesPrice - purchasePrice).toFixed(2);
+        const salesPriceInput = row.querySelector('.price-input');
+        const profitMarginInput = row.querySelector('.profit-margin');
+
+        const salesPrice = parseFloat(salesPriceInput.value) || 0;
+        profitMarginInput.value = (salesPrice - purchasePrice).toFixed(2)
     }
 
-    function reloadAll() {
-        const rows = document.querySelectorAll('tbody tr');
-        rows.forEach(row => updateProfitMargin(row));
+    //Complimentary to updateProfitMargin, sets sales price = to sum of item.price and profitMargin
+    function updateSalesPrice(row) {
+            const purchasePrice = parseFloat(row.querySelector('.item-price').textContent) || 0;
+            const salesPriceInput = row.querySelector('.price-input');
+            const profitMarginInput = row.querySelector('.profit-margin');
+
+            const profitMargin = parseFloat(profitMarginInput.value) || 0;
+            salesPriceInput.value = (purchasePrice + profitMargin).toFixed(2);
     }
-    
-    document.querySelectorAll('tbody tr').forEach(row => {
-        row.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', () => updateProfitMargin(row));
-        });
+    async function sendUpdate(row){
+        const stockItemID = row.dataset.id;
+        const quantity = row.querySelector('.quantity-input').value;
+        const price = parseFloat(row.querySelector('.price-input').value) || 0;
+        const profitMargin = parseFloat(row.querySelector('.profit-margin').value) || 0;
+
+        try{
+            const response = await fetch('/update-stock-item/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    id: stockItemID,
+                    quantity: parseInt(quantity) || 0,
+                    price: price,
+                    profitMargin: profitMargin
+                })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                console.log(`Stock Item Updated`)
+            } else {
+                console.log('Could not update item')
+            }
+        } catch (err){
+            console.error('Error: ', err);
+        }
+    }
+
+    rows.forEach(row => {
+        const quantityInput = row.querySelector('.quantity-input');
+        const priceInput = row.querySelector('.price-input');
+        const profitMarginInput = row.querySelector('.profit-margin');
+
+        //Quantity change sends simple update
+        quantityInput.addEventListener('change', () => sendUpdate(row));
+
+        //Sales Price update, calls updateProfitMargin and sends update to priceInput
+        priceInput.addEventListener('input', () => updateProfitMargin(row));
+        priceInput.addEventListener('change', () => sendUpdate(row));
+
+        //Profit Margin update, calls updateSalesPrice and send update to profitMarginInput
+        profitMarginInput.addEventListener('input', () => updateSalesPrice(row));
+        profitMarginInput.addEventListener('change', () => sendUpdate(row));
+
+        //Initialize profitMargin
         updateProfitMargin(row);
     });
 
-    document.getElementById("upload-stock-file").addEventListener("click", () => {
-       document.getElementById("stock-file-input").click();
-    });
-
-    document.getElementById("stock-file-input").addEventListener("change", (event) => {
-       document.getElementById('stock-upload-form').submit()
-    });
-
-    if (window.location.search.includes('uploaded=true')){
-        window.location.href = window.location.pathname;
-    }
-
-    const checkboxes = document.querySelectorAll('.remove-checkbox');
-    const removeBtn = document.getElementById('remove-selected');
-
+    //Remove selected items
     function toggleButton() {
         const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
         removeBtn.style.display = anyChecked ? 'inline-block' : 'none';
@@ -178,7 +187,6 @@
                             .map(cb => cb.value);
 
         if (selectedIds.length === 0) return;
-
         if (!confirm('Are you sure you want to remove these selected items')) return;
 
         try{
@@ -199,8 +207,7 @@
                     const row = document.querySelector(`tr[data-id="${id}"]`);
                     if (row) row.remove();
                 });
-                toggleButton()
-                reloadAll()
+                toggleButton();
             } else {
                 alert('Could not delete items');
             }
@@ -210,9 +217,26 @@
             }
     });
 
+    //Uploading Stock Files
+   document.getElementById("upload-stock-file").addEventListener("click", () => {
+       document.getElementById("stock-file-input").click();
+    });
+
+   document.getElementById("stock-file-input").addEventListener("change", (event) => {
+       document.getElementById('stock-upload-form').submit()
+    });
+
+   //removes query param after upload
+   if (window.location.search.includes('uploaded=true')){
+        window.location.href = window.location.pathname;
+    }
+
+    });
 </script>
 
 {% endblock %}
+
+
 <!-- Potential Modal Implementation, Trying direct editing in the row
 {% for stock_item in stock_items %}
                                 <div class="modal-fade" id="modal{{ stock_item.id }}"

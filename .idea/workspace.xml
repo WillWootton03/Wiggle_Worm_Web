@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a9b5e13-e8bc-47fd-a398-840d13bde4f8" name="Changes" comment="Added supplier homepage, which displays table of all items for an owners store stock. Added a uuid to stockitem to differentiate between stock item and item. Added functionality that allows the owner to modify quantity and sales price of their stock item. Added column to display profit margin on item depending on sales price and purchasing price.">
+    <list default="true" id="2a9b5e13-e8bc-47fd-a398-840d13bde4f8" name="Changes" comment="Added functionality for suppliers to upload their own excel files (.xlsx) to upload data based on their current stock. There is now also a remove items column which allows suppliers to easily check boxes of items they wish to remove and delete items when the remove items button is pressed.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/supplier_homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/supplier_homepage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wiggle_worm/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wiggle_worm_web/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/wiggle_worm_web/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +133,7 @@
       <workItem from="1763400179036" duration="38735000" />
       <workItem from="1763484010986" duration="20214000" />
       <workItem from="1763523408188" duration="6393000" />
-      <workItem from="1763569715923" duration="24009000" />
+      <workItem from="1763569715923" duration="27701000" />
     </task>
     <task id="LOCAL-00001" summary="Initial git commit. Basic website with users, and roles set up, small urls that display minimal information but allow for updating models through the website.">
       <option name="closed" value="true" />
@@ -177,7 +175,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763582367854</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added functionality for suppliers to upload their own excel files (.xlsx) to upload data based on their current stock. There is now also a remove items column which allows suppliers to easily check boxes of items they wish to remove and delete items when the remove items button is pressed.">
+      <option name="closed" value="true" />
+      <created>1763606489359</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1763606489359</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,7 +205,8 @@
     <MESSAGE value="Day Log: Refined the databases and items by converting Stock into a container for a StockItem model which holds item data inside a stock. Created functionality in the django admin site to make adding, deleting and modifying data easier and readable. Will commit more frequently as tasks complete instead of daily." />
     <MESSAGE value="Added a pdf of my miro roadmap. Very crude and rudementary but useful for keeping myself on task and focused on next steps." />
     <MESSAGE value="Added supplier homepage, which displays table of all items for an owners store stock. Added a uuid to stockitem to differentiate between stock item and item. Added functionality that allows the owner to modify quantity and sales price of their stock item. Added column to display profit margin on item depending on sales price and purchasing price." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added supplier homepage, which displays table of all items for an owners store stock. Added a uuid to stockitem to differentiate between stock item and item. Added functionality that allows the owner to modify quantity and sales price of their stock item. Added column to display profit margin on item depending on sales price and purchasing price." />
+    <MESSAGE value="Added functionality for suppliers to upload their own excel files (.xlsx) to upload data based on their current stock. There is now also a remove items column which allows suppliers to easily check boxes of items they wish to remove and delete items when the remove items button is pressed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added functionality for suppliers to upload their own excel files (.xlsx) to upload data based on their current stock. There is now also a remove items column which allows suppliers to easily check boxes of items they wish to remove and delete items when the remove items button is pressed." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -210,9 +217,9 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/templates/supplier_homepage.html</url>
-          <line>71</line>
+          <line>83</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="2" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

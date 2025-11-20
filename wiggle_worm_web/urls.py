@@ -32,4 +32,6 @@ urlpatterns = [
     path('update-item/<str:item_id>/', views.update_item_data, name='update_item'),
     path('delete-item/<str:item_id>/', views.delete_item_data, name='delete_item'),
     path('update-stock-item/', views.update_stock_item, name='update_stock_item'),
+    path('upload-stock-file/', views.upload_stock_file, name='upload_stock_file'),
+    path('remove_items/', views.remove_items, name='remove_items'),
 ]
